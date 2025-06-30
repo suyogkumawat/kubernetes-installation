@@ -1,8 +1,10 @@
-#Disable Swap: Required for Kubernetes to function correctly.
-
+## Disable Swap: Required for Kubernetes to function correctly.
+```bash
 sudo swapoff -a
-#Load Necessary Kernel Modules: Required for Kubernetes networking.
+```
 
+## Load Necessary Kernel Modules: Required for Kubernetes networking.
+```bash
 cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
 overlay
 br_netfilter
@@ -10,9 +12,9 @@ EOF
 
 sudo modprobe overlay
 sudo modprobe br_netfilter
-
-#Set Sysctl Parameters: Helps with networking.
-
+```
+## Set Sysctl Parameters: Helps with networking.
+```bash
 cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
 net.bridge.bridge-nf-call-iptables  = 1
 net.bridge.bridge-nf-call-ip6tables = 1
@@ -22,9 +24,10 @@ EOF
 sudo sysctl --system
 lsmod | grep br_netfilter
 lsmod | grep overlay
+```
 
-#Install Containerd:
-
+## Install Containerd:
+```bash
 sudo apt-get update
 sudo apt-get install -y ca-certificates curl
 sudo install -m 0755 -d /etc/apt/keyrings
@@ -40,9 +43,10 @@ containerd config default | sed -e 's/SystemdCgroup = false/SystemdCgroup = true
 
 sudo systemctl restart containerd
 sudo systemctl status containerd
+```
 
-#Install Kubernetes Components:
-
+## Install Kubernetes Components:
+```bash
 sudo apt-get update
 sudo apt-get install -y apt-transport-https ca-certificates curl gpg
 
@@ -53,3 +57,4 @@ echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.
 sudo apt-get update
 sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
+```
