@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  type: NodePort
+  selector:
+    # This must match your Pod's labels
+    # But your Pod has no labels yet!
+    # So add a label to your Pod spec
+    app: nginx
+  ports:
+  - port: 80       # Service port
+    targetPort: 80 # Pod containerPort
+    nodePort: 30080 # NodePort range: 30000-32767
+
