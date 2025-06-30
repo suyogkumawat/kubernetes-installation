@@ -33,7 +33,7 @@ data:
     maxmemory 2mb
     maxmemory-policy allkeys-lru    
 ```
-## The configuration values have not changed because the Pod needs to be restarted to grab updated values from associated ConfigMaps. Let's delete and recreate the Pod:
+### The configuration values have not changed because the Pod needs to be restarted to grab updated values from associated ConfigMaps. Let's delete and recreate the Pod:
 ```bash
 kubectl delete pod redis
 kubectl apply -f redis-pod.yml
